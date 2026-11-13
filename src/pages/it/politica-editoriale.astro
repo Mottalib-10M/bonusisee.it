@@ -1,0 +1,27 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { AUTHOR_NAME, CONTACT_EMAIL, LAST_UPDATED, SITE_NAMES } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+const lang = 'it';
+---
+<PageLayout title={`Politica editoriale – ${SITE_NAMES[lang]}`} description="Da dove vengono soglie ISEE, importi dell’assegno unico e regole dei bonus pubblicati qui, chi ne risponde, quando vengono riletti e cosa succede quando si segnala un errore." lang={lang} noindex={true} breadcrumbs={[{ label: 'Politica editoriale' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>Politica editoriale e delle correzioni</h1>
+    <p>Una soglia sbagliata fa rinunciare a un bonus che spetta; una scadenza sbagliata fa perdere gli arretrati. Ecco da dove vengono le nostre informazioni e cosa facciamo quando una è sbagliata.</p>
+    <h2>Responsabilità</h2><p>{AUTHOR_NAME} risponde di ogni soglia, importo, data e calcolo degli strumenti. Un dato che non corrisponde alla sua fonte si segnala a <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+    <h2>Solo fonti primarie</h2>
+    <ul>
+      <li><strong>le leggi e i decreti</strong> (DPCM n. 159/2013, D.Lgs. n. 230/2021, leggi di bilancio) letti su Normattiva;</li>
+      <li><strong>le schede, le circolari e i messaggi dell’INPS</strong> e le pagine del MEF, per soglie annuali e prassi, citati con la loro data;</li>
+      <li><strong>il testo del disegno di legge di bilancio 2027</strong> pubblicato dalla Ragioneria generale dello Stato, sempre indicato come «DDL, non votato».</li>
+    </ul>
+    <p>Nessuna informazione viene da CAF, consulenti, forum o articoli di stampa. Un dato che non abbiamo potuto rileggere su una pagina ufficiale (per esempio la soglia ISEE della Carta Dedicata a te) non viene mostrato come certo: lo diciamo.</p>
+    <h2>Stime dichiarate come stime</h2><p>L’ISEE calcolato qui è una stima: l’attestazione dell’INPS usa dati che il sito non conosce. Per l’assegno unico gli estremi della tabella 2026 sono quelli pubblicati dall’INPS; i valori intermedi e le maggiorazioni sono stimati e lo diciamo accanto all’importo. Le cifre 2027 restano del disegno di legge fino alla pubblicazione della legge in Gazzetta Ufficiale.</p>
+    <h2>Controlli prima della pubblicazione</h2><p>Scala di equivalenza, franchigie, soglie dell’assegno unico, importi del nido e dei nuovi nati, bonus mamme e carta acquisti sono test automatici; un aggiornamento che li fa fallire viene bloccato.</p>
+    <h2>Aggiornamenti</h2><p>Gli aggiornamenti sono manuali: al voto della legge di bilancio, alle nuove soglie annuali dell’INPS e a ogni nuova circolare si correggono i parametri, si rieseguono i test e si ripubblica. La data dell’ultima rilettura è scritta in ogni pagina.</p>
+    <h2>Gestione degli errori</h2>
+    <ol><li>Verifica sul testo ufficiale.</li><li>Parametri o codice corretti, un test aggiunto.</li><li>Nuova data sulle pagine interessate.</li></ol>
+    <h2>Indipendenza</h2><p>Nessun legame commerciale con CAF, patronati, consulenti, banche o assicurazioni. Nessun link sponsorizzato nei testi. Un eventuale rapporto commerciale verrebbe dichiarato chiaramente.</p>
+    <p>Vedi anche il <a href={route('method', lang)}>metodo</a>. Versione: {LAST_UPDATED}.</p>
+  </div>
+</PageLayout>

@@ -1,0 +1,22 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import LegalIdentity from '../../components/LegalIdentity.astro';
+import { AUTHOR_NAME, CONTACT_EMAIL, LAST_UPDATED, SITE_NAMES } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+const lang = 'en';
+---
+<PageLayout title={`Contact – ${SITE_NAMES[lang]}`} description="Write to the publisher of Bonus ISEE: report a wrong limit or amount, a new INPS circular, a question about the method, or embed the tool on your site." lang={lang} noindex={true} breadcrumbs={[{ label: 'Contact' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>Contact</h1>
+    <p>One address, read every week: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. There is no phone line and we call nobody back: this site sells nothing.</p>
+    <h2>Reporting an error</h2>
+    <p>For a date, a rule or a calculation, attach the legal text or official page that contradicts the site, or paste the tool’s share link: it holds your choices and nothing else. Never send us your statement, tax code or bill numbers: we do not need them. The procedure is in the <a href={route('editorial', lang)}>editorial policy</a>.</p>
+    <h2>What we cannot do</h2>
+    <p>We have no access to INPS records: not your DSU, your applications or your payments. The ISEE certificate, outcomes and payment dates are in the INPS reserved area, which also answers through its contact centre; CAFs and patronati help with the DSU and applications free of charge. We give no tax or legal advice on individual cases.</p>
+    <h2>Embedding the tool</h2>
+    <p>Associations, schools, family centres, local media: the “what am I entitled to” tool can be embedded for free with an iframe. The code is on the <a href={route('widget', lang)}>Embed the tool</a> page.</p>
+    <h2>Publisher</h2>
+    <LegalIdentity lang={lang} />
+    <p>{AUTHOR_NAME} is responsible for the content of {SITE_NAMES[lang]}; full details are in the <a href={route('terms', lang)}>legal notice</a>. Page reviewed on {LAST_UPDATED}.</p>
+  </div>
+</PageLayout>

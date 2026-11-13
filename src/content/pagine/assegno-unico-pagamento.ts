@@ -1,0 +1,89 @@
+import { defineGuide } from '../../lib/guide-types';
+
+const fam = { isee: 20000, minori: 2, under1: 0, tra1e3: 0, maggiorenni: 0, entrambiLavorano: false, madreUnder21: false };
+
+export default defineGuide({
+  id: 'assegno-unico-pagamento',
+  group: 'assegno',
+  order: 4,
+  mini: 'quota',
+  miniHref: 'assegno-unico-importo',
+  related: ['assegno-unico-importo', 'assegno-unico-2027', 'assegno-unico-senza-isee', 'bonus-nuovi-nati'],
+  sources: ['inpsAuu', 'dlgs230'],
+  it: {
+    slug: 'assegno-unico-pagamento',
+    nav: 'Pagamento assegno unico',
+    card: 'A chi arriva l’accredito, come si divide tra i genitori, da quale mese si parte e perché l’importo cambia.',
+    title: 'Assegno unico pagamento: accredito, quote e decorrenza',
+    description: 'Assegno unico pagamento: come arriva l’accredito, metà a ciascun genitore o tutto al richiedente, da quale mese decorre e perché un mese l’importo può cambiare.',
+    h1: 'Assegno unico pagamento: chi e da quando',
+    intro: 'Chi riceve l’accredito dell’assegno unico, come si divide tra i genitori e da quale mese parte, con la quota che arriva sul tuo conto.',
+    resume: (h) => {
+      const r = h.M.auu(fam);
+      return `L’INPS paga l’assegno unico ogni mese al genitore che ha presentato la domanda oppure, se uno dei due lo chiede, in parti uguali tra i genitori che esercitano la responsabilità genitoriale. L’accredito avviene su conto corrente bancario o postale, libretto di risparmio con IBAN, carta di credito o di debito con IBAN, oppure con bonifico domiciliato allo sportello postale. La divisione al 50 per cento parte dal mese successivo a quello in cui l’INPS riceve la scelta; con l’affidamento esclusivo il richiedente può ottenere il 100 per cento. Per i figli in arrivo l’assegno spetta dal settimo mese di gravidanza. Le domande presentate tra il 1° marzo e il 30 giugno danno diritto agli arretrati da marzo; quelle successive decorrono dal mese dopo la domanda. Per due figli minorenni e un ISEE di ${h.eur(fam.isee)} l’assegno stimato è di ${h.eur(r.mensile, 2)} al mese: ${h.eur(r.mensile / 2, 2)} per genitore se il pagamento è diviso.`;
+    },
+    faqs: (h) => [
+      { q: 'Come si chiede di dividere l’assegno tra i genitori?', a: 'Il richiedente può indicare in domanda le modalità di pagamento proprie e dell’altro genitore. Se non lo fa, l’altro genitore entra nella domanda con le sue credenziali e inserisce il proprio IBAN. Secondo la scheda INPS la quota al secondo genitore decorre dal mese successivo a quello in cui la scelta viene comunicata, quindi i mesi precedenti restano pagati al richiedente.' },
+      { q: 'Il figlio maggiorenne può ricevere l’assegno direttamente?', a: 'Sì. Al compimento dei 18 anni il figlio può presentare una domanda propria, in sostituzione di quella dei genitori, e chiedere il pagamento diretto della quota che gli spetta. Serve che rientri nei casi previsti per i figli tra 18 e 21 anni: studio, formazione, lavoro con reddito basso, ricerca di lavoro o servizio civile universale.' },
+      { q: 'Perché questo mese l’assegno è più basso?', a: 'Le cause più comuni sono quattro: l’ISEE è scaduto e da marzo l’INPS paga gli importi minimi, un figlio ha compiuto 18 anni e la sua quota è scesa, un figlio ha compiuto 21 anni e la quota è finita, oppure l’INPS ha recuperato somme pagate in eccesso nei mesi precedenti. Il dettaglio è nel fascicolo previdenziale del cittadino.' },
+      { q: 'Si può ricevere l’assegno su una carta prepagata?', a: 'Sì, purché la carta abbia un codice IBAN e sia intestata o cointestata al genitore che riceve il pagamento. La scheda INPS elenca conto corrente, libretto di risparmio, carta di credito o di debito con IBAN e bonifico domiciliato. Un IBAN non intestato al beneficiario è la causa più frequente di pagamenti respinti.' },
+      { q: 'Chi lavora in Italia ma vive all’estero riceve l’assegno?', a: 'Sì, secondo le nuove regole indicate dall’INPS e a determinate condizioni: per i lavoratori non residenti l’assegno è commisurato alla durata dell’attività lavorativa svolta in Italia, con iscrizione a una gestione previdenziale e contributi regolari. La domanda va presentata per ogni periodo di lavoro e ripresentata ogni anno dal 1° marzo, mentre per i residenti l’INPS paga d’ufficio.' },
+      { q: 'Dove controllo le date e gli importi pagati?', a: 'Nel fascicolo previdenziale del cittadino sul sito INPS, o nell’app INPS Mobile, alla voce dei pagamenti dell’assegno unico: per ogni mese sono indicati importo, conto di accredito ed eventuali conguagli. In caso di dubbi si può chiamare il contact center al numero verde 803.164 da rete fissa o allo 06 164.164 da cellulare.' },
+    ],
+    body: (h) => `<h2>Assegno unico pagamento: a chi va l’accredito</h2>
+<p>La ${h.src('inpsAuu', 'scheda INPS')} prevede due soluzioni. Di base l’assegno è pagato al genitore che presenta la domanda. In alternativa, anche dopo, si può chiedere il pagamento in parti uguali tra i due genitori che esercitano la responsabilità genitoriale, indipendentemente dal fatto che vivano insieme. È il caso tipico delle coppie separate con affidamento condiviso. Con l’affidamento esclusivo il genitore affidatario può chiedere il 100 per cento. Per i figli con un tutore o in affido familiare, l’assegno è riconosciuto nell’interesse esclusivo del minore.</p>
+<p>La domanda può presentarla uno dei due genitori, anche se non convive con il figlio, il genitore affidatario nei casi di affidamento temporaneo o preadottivo, il tutore o l’amministratore di sostegno e, dai 18 anni, il figlio stesso. Si presenta online sul sito INPS, con l’app INPS Mobile, tramite il contact center o un patronato.</p>
+<!--mini:quota-->
+<h2>Da quale mese parte il pagamento</h2>
+<p>La regola sulla decorrenza è quella dell’${h.src('dlgs230', 'articolo 6 del decreto legislativo n. 230 del 2021')}: per le domande presentate tra il 1° marzo e il 30 giugno l’assegno spetta con tutti gli arretrati da marzo; per quelle presentate dopo il 30 giugno decorre dal mese successivo alla domanda. Per un figlio che deve ancora nascere, l’assegno spetta dal settimo mese di gravidanza: conviene quindi aggiornare la domanda appena nasce il bambino, perché il nuovo figlio entri nel calcolo senza perdere mensilità.</p>
+<p>Chi ha già una domanda attiva non deve ripresentarla: per i residenti in Italia l’INPS continua a pagare d’ufficio. Bisogna però comunicare le variazioni, come la nascita di un altro figlio, e rinnovare l’ISEE ogni anno. Senza un ISEE valido, da marzo l’INPS paga gli importi minimi; le regole del ${h.a('assegno-unico-2027', 'rinnovo 2027')} spiegano come recuperare la differenza.</p>
+<h2>Come si riceve: i metodi ammessi</h2>
+<p>L’accredito può avvenire su conto corrente bancario o postale, su libretto di risparmio dotato di IBAN, su carta di credito o di debito dotata di IBAN, oppure con bonifico domiciliato da ritirare allo sportello postale. Il richiedente indica in domanda le modalità di pagamento proprie e, se vuole dividere l’assegno, anche quelle dell’altro genitore. In caso contrario l’altro genitore entra nella domanda con le proprie credenziali e inserisce da solo il proprio IBAN. Cambiare IBAN è possibile in qualsiasi momento dalla stessa procedura.</p>
+<h2>Perché l’importo cambia da un mese all’altro</h2>
+<p>L’assegno unico non è una cifra fissa. Cambia quando scade l’ISEE, quando un figlio compie un anno e perde la maggiorazione per i neonati, quando compie 18 anni e passa all’importo dei maggiorenni, quando compie 21 anni e la sua quota finisce, salvo disabilità. Cambia anche quando nasce un figlio, quando uno dei genitori smette di lavorare o quando l’INPS ricalcola l’assegno dopo una nuova DSU. Ogni anno, poi, le soglie e gli importi si rivalutano con l’inflazione. Il ${h.a('assegno-unico-importo', 'calcolo dell’importo')} mostra quanto pesa ogni voce sulla tua famiglia.</p>
+<h2>Conguagli e recuperi</h2>
+<p>Quando l’ISEE arriva entro giugno, l’INPS versa in un’unica soluzione la differenza tra gli importi minimi già pagati e quelli spettanti, e nel mese del conguaglio l’accredito è più alto del solito. Al contrario, se risultano somme pagate in più, per esempio perché un figlio non era più a carico, l’INPS può recuperarle trattenendole dalle mensilità successive. In entrambi i casi il dettaglio compare nel fascicolo previdenziale del cittadino.</p>
+<h2>Con quali misure si cumula</h2>
+<p>L’assegno unico non assorbe né riduce il ${h.a('bonus-asilo-nido', 'bonus asilo nido')}, ed è compatibile con le misure in denaro per i figli di Regioni, Province autonome ed enti locali e con il ${h.a('bonus-mamme', 'bonus mamme')}. Non concorre al reddito complessivo ai fini IRPEF. Dal marzo 2022 ha sostituito il premio alla nascita, l’assegno ai nuclei con almeno tre figli minori, gli assegni familiari per i nuclei con figli, il bonus bebè e le detrazioni fiscali per i figli fino a 21 anni.</p>
+<h2>Requisiti per continuare a ricevere l’assegno</h2>
+<p>Per tutta la durata del beneficio il richiedente deve avere la cittadinanza o un titolo di soggiorno valido, essere soggetto all’imposta sul reddito in Italia ed essere residente in Italia, oppure lavorarvi con iscrizione a una gestione previdenziale e contributi regolari. Se uno di questi requisiti viene meno, il pagamento si interrompe: per questo conviene comunicare subito all’INPS ogni cambiamento.</p>`,
+  },
+  en: {
+    slug: 'child-allowance-payments',
+    nav: 'Child allowance payments',
+    card: 'Who gets the payment, how it is split between parents, which month it starts from and why the amount changes.',
+    title: 'Assegno unico payments: who is paid, splits and start date',
+    description: 'Assegno unico payments: how the money arrives, half to each parent or all to the applicant, which month it starts from and why the amount can change each month.',
+    h1: 'Assegno unico payments: who and from when',
+    intro: 'Who receives the assegno unico, how parents split it and when it starts, with the share paid to your account.',
+    resume: (h) => {
+      const r = h.M.auu(fam);
+      return `INPS pays the child allowance every month to the parent who filed the claim or, if either asks, in equal parts to the parents with parental responsibility. Payment goes to a bank or post-office current account, a savings book with an IBAN, a credit or debit card with an IBAN, or by a transfer collected at a post office. The 50 per cent split starts from the month after INPS receives the choice; with sole custody the applicant can receive 100 per cent. For an unborn child the allowance is due from the seventh month of pregnancy. Claims filed between 1 March and 30 June carry arrears from March; later claims start from the month after filing. For two children under 18 and an ISEE of ${h.eur(fam.isee)} the estimated allowance is ${h.eur(r.mensile, 2)} a month: ${h.eur(r.mensile / 2, 2)} per parent if the payment is split.`;
+    },
+    faqs: (h) => [
+      { q: 'How do we split the allowance between parents?', a: 'The applicant can enter both parents’ payment details in the claim. If not, the other parent logs into the claim with their own credentials and adds their IBAN. According to the INPS page, the second parent’s share starts from the month after the choice is notified, so earlier months stay paid to the applicant.' },
+      { q: 'Can an adult child receive the allowance directly?', a: 'Yes. On turning 18 the child can file their own claim, replacing the parents’ one, and ask for direct payment of their share. They must fall within the cases for children aged 18 to 21: studying, training, working on a low income, looking for work or doing universal civil service.' },
+      { q: 'Why is the allowance lower this month?', a: 'The usual causes are four: the ISEE has expired and from March INPS pays the minimum, a child has turned 18 and their share has fallen, a child has turned 21 and their share has ended, or INPS is recovering money overpaid in previous months. The details are in your INPS personal records (fascicolo previdenziale).' },
+      { q: 'Can the allowance go to a prepaid card?', a: 'Yes, as long as the card has an IBAN and is in the name, or joint name, of the parent being paid. The INPS page lists current accounts, savings books, credit or debit cards with an IBAN and post-office transfers. An IBAN not held by the recipient is the most common reason for rejected payments.' },
+      { q: 'Do people who work in Italy but live abroad get it?', a: 'Yes, under the new rules set out by INPS and on certain conditions: for non-resident workers the allowance is in proportion to the time worked in Italy, with social-security registration and regular contributions. The claim is filed for each period of work and filed again every year from 1 March, whereas for residents INPS keeps paying automatically.' },
+      { q: 'Where do I check dates and amounts paid?', a: 'In your INPS personal records on the INPS website, or in the INPS Mobile app, under child-allowance payments: each month shows the amount, the account credited and any adjustments. For questions you can call the contact centre on freephone 803.164 from a landline or 06 164.164 from a mobile.' },
+    ],
+    body: (h) => `<h2>Assegno unico payments: who receives the money</h2>
+<p>The ${h.src('inpsAuu', 'INPS page')} provides two options. By default the allowance is paid to the parent who files the claim. Alternatively, even later on, payment can be split equally between the two parents with parental responsibility, whether or not they live together. That is the usual case for separated couples with shared custody. With sole custody the custodial parent can ask for 100 per cent. For children with a guardian or in foster care, the allowance is granted solely in the child’s interest.</p>
+<p>The claim can be filed by either parent, even one who does not live with the child, by a foster or pre-adoptive parent, by a guardian or support administrator and, from 18, by the child. It is filed online on the INPS website, in the INPS Mobile app, through the contact centre or through a patronato.</p>
+<!--mini:quota-->
+<h2>Which month payment starts from</h2>
+<p>The start-date rule is in ${h.src('dlgs230', 'article 6 of Legislative Decree 230 of 2021')}: for claims filed between 1 March and 30 June the allowance is due with all arrears from March; for claims filed after 30 June it starts from the month after filing. For a child not yet born, the allowance is due from the seventh month of pregnancy: update the claim as soon as the baby is born so the new child enters the calculation without losing payments.</p>
+<p>If your claim is already active you do not file it again: for residents of Italy INPS keeps paying automatically. You must, however, report changes, such as the birth of another child, and renew the ISEE every year. Without a valid ISEE, from March INPS pays the minimum amounts; the rules for the ${h.a('assegno-unico-2027', '2027 renewal')} explain how to recover the difference.</p>
+<h2>How it is paid: accepted methods</h2>
+<p>Payment can go to a bank or post-office current account, a savings book with an IBAN, a credit or debit card with an IBAN, or a transfer collected at a post-office counter. The applicant enters their own payment details and, to split the allowance, those of the other parent. Otherwise the other parent logs in with their own credentials and adds their own IBAN. The IBAN can be changed at any time through the same service.</p>
+<h2>Why the amount changes from month to month</h2>
+<p>The child allowance is not a fixed sum. It changes when the ISEE expires, when a child turns one and loses the newborn supplement, when a child turns 18 and moves to the adult amount, and when a child turns 21 and their share ends, unless disabled. It also changes when a child is born, when a parent stops working or when INPS recalculates after a new DSU. Every year, too, limits and amounts are revalued for inflation. The ${h.a('assegno-unico-importo', 'amount calculator')} shows how much each item weighs for your family.</p>
+<h2>Adjustments and recoveries</h2>
+<p>When the ISEE arrives by June, INPS pays in one go the difference between the minimum amounts already paid and those due, so that month’s payment is higher than usual. Conversely, if too much was paid, for example because a child was no longer dependent, INPS can recover it by withholding it from later payments. In both cases the details appear in your INPS personal records.</p>
+<h2>Which measures it can be combined with</h2>
+<p>The child allowance neither absorbs nor reduces the ${h.a('bonus-asilo-nido', 'nursery bonus')}, and it is compatible with cash support for children from regions, autonomous provinces and local authorities and with the ${h.a('bonus-mamme', 'working-mothers bonus')}. It is not part of total income for IRPEF. Since March 2022 it has replaced the birth bonus, the allowance for households with at least three children under 18, family allowances for households with children, the baby bonus and tax deductions for children up to 21.</p>
+<h2>Conditions for continuing to receive it</h2>
+<p>Throughout the payment period the applicant must hold citizenship or a valid residence permit, be liable to income tax in Italy and be resident in Italy, or work there with social-security registration and regular contributions. If one of these conditions stops being met, payment stops: so tell INPS about any change straight away.</p>`,
+  },
+});

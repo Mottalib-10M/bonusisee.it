@@ -1,0 +1,27 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { AUTHOR_NAME, CONTACT_EMAIL, LAST_UPDATED, SITE_NAMES } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+const lang = 'en';
+---
+<PageLayout title={`Editorial policy – ${SITE_NAMES[lang]}`} description="Where the ISEE limits, child allowance amounts and bonus rules published here come from, who answers for them, when they are reread and what happens when an error is reported." lang={lang} noindex={true} breadcrumbs={[{ label: 'Editorial policy' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>Editorial and corrections policy</h1>
+    <p>A wrong limit makes a family give up a bonus it is entitled to; a wrong deadline loses arrears. Here is where our information comes from and what we do when something is wrong.</p>
+    <h2>Responsibility</h2><p>{AUTHOR_NAME} answers for every limit, amount, date and calculation in the tools. Anything that does not match its source can be reported to <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+    <h2>Primary sources only</h2>
+    <ul>
+      <li><strong>the laws and decrees</strong> (Decree 159/2013, Legislative Decree 230/2021, budget laws) read on Normattiva;</li>
+      <li><strong>INPS guidance pages, circulars and messages</strong> and Ministry of Economy pages, for yearly limits and practice, quoted with their date;</li>
+      <li><strong>the text of the 2027 budget bill</strong> published by the State General Accounting Office, always labelled “bill, not voted”.</li>
+    </ul>
+    <p>Nothing comes from tax-assistance centres, consultants, forums or press articles. A figure we could not reread on an official page (such as the ISEE limit of the Carta Dedicata a te) is never shown as certain: we say so.</p>
+    <h2>Estimates labelled as estimates</h2><p>The ISEE worked out here is an estimate: the INPS certificate uses data the site does not know. For the child allowance, the end points of the 2026 table are those published by INPS; values in between and supplements are estimated and we say so next to the amount. The 2027 figures remain those of the bill until the law appears in the Gazzetta Ufficiale.</p>
+    <h2>Checks before publication</h2><p>The equivalence scale, allowances, child-allowance limits, nursery and newborn amounts, the working-mothers bonus and the shopping card are automated tests; an update that breaks them is blocked.</p>
+    <h2>Updates</h2><p>Updates are manual: when the budget law is voted, when INPS publishes the yearly limits and with each new circular, the parameters are corrected, the tests rerun and the site republished. The date of the last reread is on every page.</p>
+    <h2>Handling errors</h2>
+    <ol><li>Check against the official text.</li><li>Parameters or code fixed, a test added.</li><li>New date on the pages concerned.</li></ol>
+    <h2>Independence</h2><p>No commercial link with CAFs, patronati, consultants, banks or insurers. No sponsored links in the text. Any commercial relationship would be stated clearly.</p>
+    <p>See also the <a href={route('method', lang)}>method</a>. Version: {LAST_UPDATED}.</p>
+  </div>
+</PageLayout>

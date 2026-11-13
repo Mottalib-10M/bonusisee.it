@@ -1,0 +1,27 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { AUTHOR_NAME, CONTACT_EMAIL, AUTHOR_ROLE, SITE_NAMES } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+import { personSchema, organizationSchema, breadcrumbSchema, profilePageSchema } from '../../lib/seo';
+import { displayDate } from '../../lib/format';
+import { P } from '../../lib/engine/params';
+const lang = 'en';
+const d = (iso: string) => displayDate(iso, 'en-GB');
+---
+<PageLayout title="Bonus ISEE, about us: who does the figures and why" description="Who publishes Bonus ISEE, why one tool for Italy’s ISEE, child allowance and family bonuses 2026-2027, where the limits come from and how to report an error." lang={lang} jsonLd={[personSchema(lang), organizationSchema(lang), profilePageSchema({ path: route('about', lang), lang }), breadcrumbSchema([{ name: 'Home', path: route('home', lang) }, { name: 'About', path: route('about', lang) }])]} breadcrumbs={[{ label: 'About' }]}>
+  <header class="mb-6"><h1 class="text-3xl font-bold text-navy-900 md:text-4xl">Who publishes {SITE_NAMES[lang]}</h1></header>
+  <div class="prose prose-slate max-w-none">
+    <div class="not-prose mb-6"><p class="text-lg font-semibold text-navy-900">{AUTHOR_NAME}</p><p class="text-navy-700">{AUTHOR_ROLE[lang]}</p></div>
+    <p>{SITE_NAMES[lang]} is published by Radif Partners. It answers a question Italian families ask every winter, when the DSU expires: with our ISEE, which benefits are we entitled to and what are they really worth?</p>
+    <h2>Why this site</h2>
+    <p>Information on family benefits is scattered across dozens of guidance pages, circulars and articles, each on a single measure. A family with two small children has to match up the child allowance, the nursery bonus, the newborn bonus and the working-mothers bonus on its own, each with its own limit and its own way of counting the ISEE. Here one tool brings the measures together, with the amount for your family, and keeps what is law apart from what is still a bill, such as the 2027 budget changes.</p>
+    <h2>Where the rules come from</h2>
+    <p>From Decree 159 of 2013, Legislative Decree 230 of 2021 and the budget laws 207 of 2024 and 199 of 2025 read on Normattiva, from INPS guidance pages and circulars, from the Ministry of Economy and from the 2027 budget bill published by the State General Accounting Office. Last reread: {d(P.retrieved_at)}. Everything is explained in the <a href={route('method', lang)}>method</a>.</p>
+    <h2>What we are not</h2>
+    <p>Radif Partners is not INPS, the Ministry of Economy, a comune, a CAF or a patronato, and files no DSU or application. We sell nothing, take no commission and ask for no contact details. Only the ISEE certificate issued by INPS and its decisions on applications are binding.</p>
+    <h2>Funding and data</h2><p>The site is free and needs no sign-up. Calculations run in your browser: the income, assets, ISEE and household details you type are neither sent nor stored.</p>
+    <h2>Why in English too</h2><p>Every page exists in Italian and English, for foreign families living in Italy: the ISEE vocabulary (DSU, household, equivalence scale, certificate) is explained.</p>
+    <h2>Write to us</h2><p>A wrong limit, a new circular, the vote on the budget law: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. See also the <a href={route('editorial', lang)}>editorial policy</a> and the <a href={route('terms', lang)}>legal notice</a>.</p>
+    <p class="text-sm text-navy-600">Texts reread on <time datetime={P.retrieved_at}>{d(P.retrieved_at)}</time>.</p>
+  </div>
+</PageLayout>

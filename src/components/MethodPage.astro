@@ -1,0 +1,87 @@
+---
+/** Metodo e fonti (page de confiance, RECETTE §8.2) : testi applicati, scelte di calcolo, test, limiti, aggiornamenti. */
+import PageLayout from '../layouts/PageLayout.astro';
+import { route, type Locale } from '../i18n/routes';
+import { P } from '../lib/engine/params';
+import * as M from '../lib/engine/index';
+import { formatMoney, formatNumber, formatPercent, displayDate } from '../lib/format';
+import { breadcrumbSchema, webPageSchema, faqSchema } from '../lib/seo';
+import { CONTACT_EMAIL } from '../data/site-config';
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const it = lang === 'it';
+const tag = it ? 'it-IT' : 'en-GB';
+const $ = (n: number, d = 0) => formatMoney(n, d, lang);
+const n2 = (x: number) => formatNumber(x, 2, lang);
+const pc = (x: number, d = 0) => formatPercent(x, d, lang);
+const d = (iso: string) => displayDate(iso, tag);
+const title = it ? 'Metodo: come stimiamo ISEE, assegno unico e bonus INPS' : 'Method: how we estimate the ISEE, allowance and bonuses';
+const description = it ? 'Metodo di Bonus ISEE: regole del DPCM 159/2013 e della legge 199/2025, stima dell’assegno unico tra le soglie INPS, bonus nido, nuovi nati e mamme, test.' : 'How Bonus ISEE works: Decree 159/2013 and Law 199/2025 rules, child-allowance estimate between INPS limits, nursery, newborn and mothers bonuses, tests.';
+const h1 = it ? 'Metodo e fonti' : 'Method and sources';
+const path = route('method', lang);
+const sources = Object.values(P.sources);
+const r = M.isee(M.ESEMPIO);
+const k = M.rivalutazione();
+const mid = M.auu({ isee: 30000, minori: 1, under1: 0, tra1e3: 0, maggiorenni: 0, entrambiLavorano: false, madreUnder21: false });
+const faqs = it ? [
+  { q: 'Perché il mio assegno unico è diverso da quello stimato?', a: `L’INPS pubblica la tabella completa degli importi per fasce di ISEE; qui sono confermati solo i due estremi, ${$(P.auu.minore_max, 2)} e ${$(P.auu.minore_min, 2)}. Tra le due soglie la quota scende in modo lineare e le maggiorazioni sono stimate con la rivalutazione dedotta dalle soglie. La differenza resta di pochi euro al mese, ma fa fede l’importo dell’INPS.` },
+  { q: 'Le cifre del 2027 si aggiornano da sole quando la legge viene votata?', a: `No. Gli aggiornamenti sono manuali: dopo la pubblicazione della legge di bilancio in Gazzetta Ufficiale rileggiamo gli articoli, correggiamo i parametri se gli importi sono cambiati con gli emendamenti, rieseguiamo i test e ripubblichiamo. Fino ad allora ogni cifra 2027 resta segnata come disegno di legge.` },
+  { q: 'Il sito conserva i redditi che inserisco?', a: 'No. Tutti i calcoli girano nel browser con il codice della pagina: redditi, patrimonio, ISEE e figli non vengono inviati a nessun server. Il file del calendario viene creato sul tuo dispositivo. Se copi il link della pagina dopo un calcolo, le tue scelte finiscono nell’indirizzo e le vede solo chi lo riceve.' },
+] : [
+  { q: 'Why is my child allowance different from the estimate?', a: `INPS publishes the full table of amounts by ISEE band; here only the two end points are confirmed, ${$(P.auu.minore_max, 2)} and ${$(P.auu.minore_min, 2)}. Between the two limits the amount falls in a straight line and the supplements are estimated with the revaluation derived from the limits. The gap stays at a few euros a month, but the INPS amount prevails.` },
+  { q: 'Do the 2027 figures update themselves when the law is voted?', a: 'No. Updates are manual: once the budget law appears in the Gazzetta Ufficiale we reread the articles, correct the parameters if amendments changed the amounts, rerun the tests and republish. Until then every 2027 figure stays marked as a bill.' },
+  { q: 'Does the site keep the income I type?', a: 'No. Every calculation runs in the browser with the page’s own code: income, assets, ISEE and children are sent to no server. The calendar file is created on your device. If you copy the page address after a calculation, your choices are in the link and only the people you send it to can see them.' },
+];
+---
+<PageLayout title={title} description={description} lang={lang} jsonLd={[webPageSchema({ name: h1, description, path, lang }), breadcrumbSchema([{ name: 'Home', path: route('home', lang) }, { name: h1, path }]), faqSchema(faqs, lang)]} faqs={faqs} breadcrumbs={[{ label: h1 }]}>
+  <header class="mb-6"><h1 class="text-3xl font-bold text-navy-900 md:text-4xl">{h1}</h1></header>
+  {it ? (
+  <div class="prose prose-slate max-w-none">
+    <p>Il metodo è semplice: gli strumenti applicano testi di legge e pagine ufficiali: il DPCM n. 159 del 2013 sull’ISEE, il decreto legislativo n. 230 del 2021 sull’assegno unico, le leggi n. 207 del 2024 e n. 199 del 2025, le schede e circolari dell’INPS, le pagine del MEF sulla carta acquisti e il disegno di legge di bilancio 2027 pubblicato dalla Ragioneria generale dello Stato, riletti il {d(P.retrieved_at)}. Ogni soglia, importo e data viene dal file <code>src/data/params-2026.json</code>; nessuna pagina scrive un numero a mano.</p>
+    <h2>Il metodo per l’ISEE</h2>
+    <p>ISR = redditi lordi meno il {pc(P.isee.ded_dip_quota)} dei redditi da lavoro dipendente (fino a {$(P.isee.ded_dip_max)} per percettore), il {pc(P.isee.ded_pens_quota)} delle pensioni (fino a {$(P.isee.ded_pens_max)}) e l’affitto (fino a {$(P.isee.ded_affitto_max)} più {$(P.isee.ded_affitto_figlio_oltre_secondo)} per figlio dopo il secondo). ISP = patrimonio mobiliare oltre la franchigia (da {$(P.isee.franchigia_mob_base)} a {$(P.isee.franchigia_mob_max)}, più {$(P.isee.franchigia_mob_figlio_oltre_secondo)} per figlio dopo il secondo), altri immobili e due terzi della casa oltre la soglia. ISEE = (ISR + {pc(P.isee.quota_patrimonio)} × ISP) / scala. Per le prestazioni familiari si usano la soglia della casa e le maggiorazioni del comma 208 della legge n. 199 del 2025. Esempio di controllo: la famiglia tipo del sito ha ISR {$(r.isr)}, ISE {$(r.ise)}, scala {n2(r.scala)} e ISEE {$(r.isee)}.</p>
+    <h2>L’assegno unico</h2>
+    <p>Gli estremi 2026 sono quelli della scheda INPS: {$(P.auu.minore_max, 2)} fino a {$(P.auu.soglia_min, 2)} e {$(P.auu.minore_min, 2)} da {$(P.auu.soglia_max, 2)} o senza ISEE. Tra i due la quota scende in linea retta, come nella tabella di legge (con ISEE di {$(30000)}: {$(mid.perMinore, 2)}). Le altre voci partono dagli importi dell’articolo 4 del decreto n. 230 moltiplicati per {n2(k)}, il rapporto tra la soglia INPS 2026 e quella di legge: sono stime, e lo diciamo accanto all’importo. La maggiorazione forfettaria per quattro o più figli resta all’importo di legge di {$(P.auu.legge_quattro_figli)}.</p>
+    <h2>I bonus</h2>
+    <p>Nido: importi e soglie della circolare INPS n. 29 del 2026, rata mensile pari a un undicesimo, mai oltre la retta. Nuovi nati: {$(P.nuovi_nati.importo)} con ISEE fino a {$(P.nuovi_nati.soglia)}, termine di {P.nuovi_nati.giorni_domanda} giorni dalla nascita, con il termine del {d(P.nuovi_nati.termine_eventi_2026_prima_apertura)} per le nascite del 2026 precedenti all’apertura del servizio. Bonus mamme: comma 207 della legge n. 199 del 2025 per il 2026, articolo 57 del disegno di legge per il 2027. Carta acquisti: soglie MEF in vigore dal 1° gennaio 2026.</p>
+    <h2>I test</h2>
+    <p>Scala, franchigie, esempio dell’ISEE, estremi dell’assegno unico, arretrati, nido, nuovi nati, bonus mamme, carta acquisti e confronto 2027 sono test automatici (<code>src/lib/engine/bonus.test.ts</code>), rieseguiti a ogni pubblicazione: un test fallito la blocca.</p>
+    <h2>Cosa il sito non fa</h2>
+    <ul>
+      <li>Non legge la tua DSU né i tuoi dati INPS: lavora solo su ciò che inserisci; fanno fede l’attestazione e le decisioni dell’INPS.</li>
+      <li>Non mostra la soglia ISEE della Carta Dedicata a te, perché non l’abbiamo riletta su una pagina ufficiale.</li>
+      <li>Non presenta le cifre del disegno di legge 2027 come legge.</li>
+      <li>Non chiede account, e-mail o numero di telefono e non vende servizi.</li>
+    </ul>
+    <h2>Aggiornamenti</h2>
+    <p>Gli aggiornamenti sono manuali: al voto della legge di bilancio, alle soglie annuali dell’INPS e a ogni nuova circolare si correggono i parametri, si rieseguono i test, si ripubblica. Ultima rilettura: {d(P.retrieved_at)}. Un errore segnalato a <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> viene verificato sulla fonte, corretto e trasformato in test. Vedi la <a href={route('editorial', lang)}>politica editoriale</a>.</p>
+    <h2>Tutte le fonti</h2>
+    <ul>{sources.map((s) => <li><a href={s.url} rel="nofollow noopener" target="_blank">{s.label.it}</a></li>)}</ul>
+    <p class="text-sm text-navy-600">Testi riletti il <time datetime={P.retrieved_at}>{d(P.retrieved_at)}</time>.</p>
+  </div>
+  ) : (
+  <div class="prose prose-slate max-w-none">
+    <p>The tools apply legal texts and official pages: Decree 159 of 2013 on the ISEE, Legislative Decree 230 of 2021 on the child allowance, Laws 207 of 2024 and 199 of 2025, INPS guidance and circulars, the Ministry of Economy pages on the shopping card and the 2027 budget bill published by the State General Accounting Office, reread on {d(P.retrieved_at)}. Every limit, amount and date comes from <code>src/data/params-2026.json</code>; no page types a figure by hand.</p>
+    <h2>The ISEE</h2>
+    <p>ISR = gross income less {pc(P.isee.ded_dip_quota)} of employment income (up to {$(P.isee.ded_dip_max)} per earner), {pc(P.isee.ded_pens_quota)} of pensions (up to {$(P.isee.ded_pens_max)}) and rent (up to {$(P.isee.ded_affitto_max)} plus {$(P.isee.ded_affitto_figlio_oltre_secondo)} per child after the second). ISP = financial assets above the allowance (from {$(P.isee.franchigia_mob_base)} to {$(P.isee.franchigia_mob_max)}, plus {$(P.isee.franchigia_mob_figlio_oltre_secondo)} per child after the second), other property and two thirds of the home above the threshold. ISEE = (ISR + {pc(P.isee.quota_patrimonio)} × ISP) / scale. For family benefits the home threshold and supplements of paragraph 208 of Law 199 of 2025 apply. Check example: the site’s sample family has ISR {$(r.isr)}, ISE {$(r.ise)}, scale {n2(r.scala)} and ISEE {$(r.isee)}.</p>
+    <h2>The child allowance</h2>
+    <p>The 2026 end points are those of the INPS page: {$(P.auu.minore_max, 2)} up to {$(P.auu.soglia_min, 2)} and {$(P.auu.minore_min, 2)} from {$(P.auu.soglia_max, 2)} or with no ISEE. In between the amount falls in a straight line, as in the legal table (ISEE of {$(30000)}: {$(mid.perMinore, 2)}). The other items start from the amounts in article 4 of Decree 230 multiplied by {n2(k)}, the ratio between the 2026 INPS limit and the legal one: they are estimates, and we say so next to the amount. The flat supplement for four or more children stays at the legal {$(P.auu.legge_quattro_figli)}.</p>
+    <h2>The bonuses</h2>
+    <p>Nursery: amounts and limits from INPS circular 29 of 2026, monthly payment of one eleventh, never above the fee. Newborn: {$(P.nuovi_nati.importo)} with an ISEE up to {$(P.nuovi_nati.soglia)}, {P.nuovi_nati.giorni_domanda} days from the birth, with the {d(P.nuovi_nati.termine_eventi_2026_prima_apertura)} deadline for 2026 births before the service opened. Working mothers: paragraph 207 of Law 199 of 2025 for 2026, article 57 of the bill for 2027. Shopping card: Ministry limits in force from 1 January 2026.</p>
+    <h2>The tests</h2>
+    <p>Scale, allowances, the ISEE example, child-allowance end points, arrears, nursery, newborn, working-mothers bonus, shopping card and the 2027 comparison are automated tests (<code>src/lib/engine/bonus.test.ts</code>), rerun at every publication: a failing test blocks it.</p>
+    <h2>What the site does not do</h2>
+    <ul>
+      <li>It does not read your DSU or INPS records: it works only on what you enter; the certificate and INPS decisions prevail.</li>
+      <li>It does not show the ISEE limit of the Carta Dedicata a te, because we could not reread it on an official page.</li>
+      <li>It does not present the 2027 bill’s figures as law.</li>
+      <li>It asks for no account, email or phone number and sells no service.</li>
+    </ul>
+    <h2>Updates</h2>
+    <p>Updates are manual: when the budget law is voted, when INPS publishes yearly limits and with every new circular, parameters are corrected, tests rerun and the site republished. Last reread: {d(P.retrieved_at)}. An error reported to <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> is checked against the source, fixed and turned into a test. See the <a href={route('editorial', lang)}>editorial policy</a>.</p>
+    <h2>All sources</h2>
+    <ul>{sources.map((s) => <li><a href={s.url} rel="nofollow noopener" target="_blank">{s.label.en}</a></li>)}</ul>
+    <p class="text-sm text-navy-600">Texts reread on <time datetime={P.retrieved_at}>{d(P.retrieved_at)}</time>.</p>
+  </div>
+  )}
+</PageLayout>

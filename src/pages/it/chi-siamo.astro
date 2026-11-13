@@ -1,0 +1,27 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { AUTHOR_NAME, CONTACT_EMAIL, AUTHOR_ROLE, SITE_NAMES } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+import { personSchema, organizationSchema, breadcrumbSchema, profilePageSchema } from '../../lib/seo';
+import { displayDate } from '../../lib/format';
+import { P } from '../../lib/engine/params';
+const lang = 'it';
+const d = (iso: string) => displayDate(iso, 'it-IT');
+---
+<PageLayout title="Bonus ISEE, chi siamo: chi fa questi calcoli e perché" description="Chi pubblica Bonus ISEE, perché uno strumento unico per ISEE, assegno unico e bonus 2026-2027, da dove vengono soglie e importi e come segnalarci un errore." lang={lang} jsonLd={[personSchema(lang), organizationSchema(lang), profilePageSchema({ path: route('about', lang), lang }), breadcrumbSchema([{ name: 'Home', path: route('home', lang) }, { name: 'Chi siamo', path: route('about', lang) }])]} breadcrumbs={[{ label: 'Chi siamo' }]}>
+  <header class="mb-6"><h1 class="text-3xl font-bold text-navy-900 md:text-4xl">Chi pubblica {SITE_NAMES[lang]}</h1></header>
+  <div class="prose prose-slate max-w-none">
+    <div class="not-prose mb-6"><p class="text-lg font-semibold text-navy-900">{AUTHOR_NAME}</p><p class="text-navy-700">{AUTHOR_ROLE[lang]}</p></div>
+    <p>{SITE_NAMES[lang]} è pubblicato da Radif Partners. Risponde a una domanda che le famiglie si fanno ogni inverno, quando scade la DSU: con il nostro ISEE, a quali aiuti abbiamo diritto e quanto valgono davvero?</p>
+    <h2>Perché questo sito</h2>
+    <p>Le informazioni sui bonus sono sparse in decine di schede, circolari e articoli, ciascuno su una misura sola. Chi ha due figli piccoli deve incrociare da solo assegno unico, bonus nido, bonus nuovi nati e bonus mamme, ognuno con la sua soglia e il suo modo di contare l’ISEE. Qui un solo strumento mette insieme le misure, con l’importo per la tua famiglia, e separa ciò che è legge da ciò che è ancora un disegno di legge, come le novità del bilancio 2027.</p>
+    <h2>Da dove vengono le regole</h2>
+    <p>Dal DPCM n. 159 del 2013, dal decreto legislativo n. 230 del 2021, dalle leggi di bilancio n. 207 del 2024 e n. 199 del 2025 lette su Normattiva, dalle schede e circolari dell’INPS, dalle pagine del MEF e dal testo del disegno di legge di bilancio 2027 pubblicato dalla Ragioneria generale dello Stato. Ultima rilettura: {d(P.retrieved_at)}. Tutto è spiegato nel <a href={route('method', lang)}>metodo</a>.</p>
+    <h2>Cosa non siamo</h2>
+    <p>Radif Partners non è l’INPS, il MEF, un Comune, un CAF o un patronato, e non presenta DSU né domande. Non vendiamo nulla, non prendiamo commissioni e non chiediamo dati di contatto. Fanno fede l’attestazione ISEE rilasciata dall’INPS e le sue decisioni sulle domande.</p>
+    <h2>Finanziamento e dati</h2><p>Il sito è gratuito e senza registrazione. I calcoli si fanno nel tuo browser: redditi, patrimonio, ISEE e composizione della famiglia che inserisci non vengono inviati né salvati.</p>
+    <h2>Perché anche in inglese</h2><p>Ogni pagina esiste in italiano e in inglese, per le famiglie straniere che vivono in Italia: le parole dell’ISEE (DSU, nucleo, scala di equivalenza, attestazione) vengono spiegate.</p>
+    <h2>Scrivici</h2><p>Una soglia sbagliata, una circolare nuova, il voto della legge di bilancio: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. Vedi anche la <a href={route('editorial', lang)}>politica editoriale</a> e le <a href={route('terms', lang)}>note legali</a>.</p>
+    <p class="text-sm text-navy-600">Testi riletti il <time datetime={P.retrieved_at}>{d(P.retrieved_at)}</time>.</p>
+  </div>
+</PageLayout>
