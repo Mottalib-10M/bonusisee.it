@@ -30,7 +30,6 @@ export default defineGuide({
 <h2>I cinque casi in cui l’altro genitore non entra</h2>
 <p>Il genitore non convivente resta fuori dal nucleo del figlio se è coniugato con persona diversa dall’altro genitore; se ha figli con persona diversa dall’altro genitore; se con provvedimento dell’autorità giudiziaria è stato stabilito il versamento di assegni periodici per il mantenimento dei figli; se è escluso dalla responsabilità genitoriale o è stato allontanato dalla residenza familiare con un provvedimento del giudice; se risulta accertata in sede giurisdizionale o dalla pubblica autorità competente in materia di servizi sociali l’estraneità in termini di rapporti affettivi ed economici.</p>
 <p>Nei primi due casi, matrimonio o figli con un’altra persona, l’ISEE del figlio non ignora del tutto il genitore non convivente: si aggiunge una componente aggiuntiva calcolata sulla sua situazione economica, secondo l’allegato 2 del decreto. Negli altri tre casi il genitore resta fuori e basta.</p>
-<!--mini:nido-->
 <h2>ISEE minorenni e bonus asilo nido</h2>
 <p>Il bonus asilo nido è la prestazione in cui l’ISEE minorenni pesa di più: per i nati dal 2024 la soglia di ${h.eur(h.P.nido.nuovi_soglia)} decide se l’importo annuo è di ${h.eur(h.P.nido.nuovi_importo)} o di ${h.eur(h.P.nido.minimo)}. Il mini simulatore qui sopra mostra la differenza; il ${h.a('bonus-asilo-nido', 'calcolo completo del bonus nido')} tiene conto anche della retta e dei mesi di frequenza. Dall’ISEE usato per il nido si tolgono gli importi dell’assegno unico.</p>
 <h2>Come si compila la DSU</h2>
@@ -62,7 +61,6 @@ export default defineGuide({
 <h2>The five cases in which the other parent stays out</h2>
 <p>The non-resident parent stays out of the child’s household if they are married to someone other than the other parent; if they have children with someone other than the other parent; if a court order has set periodic maintenance payments for the children; if they are excluded from parental responsibility or have been removed from the family home by a court order; or if estrangement in emotional and financial terms has been established by a court or by the public authority responsible for social services.</p>
 <p>In the first two cases, marriage or children with someone else, the child’s ISEE does not ignore the non-resident parent altogether: an additional component based on their financial situation is added, under annex 2 of the decree. In the other three cases the parent simply stays out.</p>
-<!--mini:nido-->
 <h2>ISEE for minors and the nursery bonus</h2>
 <p>The nursery bonus is where the ISEE for minors matters most: for children born from 2024 the ${h.eur(h.P.nido.nuovi_soglia)} limit decides whether the yearly amount is ${h.eur(h.P.nido.nuovi_importo)} or ${h.eur(h.P.nido.minimo)}. The small calculator above shows the difference; the ${h.a('bonus-asilo-nido', 'full nursery bonus calculator')} also takes the fee and months attended into account. Child-allowance amounts are taken out of the ISEE used for the nursery bonus.</p>
 <h2>How to fill in the DSU</h2>

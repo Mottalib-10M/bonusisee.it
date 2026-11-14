@@ -8,7 +8,10 @@ const cache = new Map<string, Intl.NumberFormat>();
 function nf(opts: Intl.NumberFormatOptions, lang?: string): Intl.NumberFormat {
   const tag = tagOf(lang);
   const k = tag + JSON.stringify(opts);
-  if (!cache.has(k)) cache.set(k, new Intl.NumberFormat(tag, opts));
+  // Italien : Intl n'écrit pas le séparateur des milliers sous 10.000 (« 8230,81 € » à côté de « 17.468,51 € »,
+  // relevé par les testeurs naïfs du 2026-11-14). On le force pour que tous les montants s'écrivent pareil.
+  const o = tag.startsWith('it') && opts.style === 'currency' ? ({ useGrouping: 'always', ...opts } as Intl.NumberFormatOptions) : opts;
+  if (!cache.has(k)) cache.set(k, new Intl.NumberFormat(tag, o));
   return cache.get(k)!;
 }
 export function formatMoney(value: number, decimals = 0, lang?: string): string {

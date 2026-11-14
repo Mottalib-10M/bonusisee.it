@@ -1,12 +1,12 @@
 /** Assegno unico 2027 : mese della DSU 2027, arretrati e mesi pagati al minimo. */
 import { T, eur, eur2, MESI, type L } from '../minis/_kit';
 import { rinnovoAuu } from '../engine/index';
-import { campiFigli, auuInput } from './_figli';
+import { campiFigli, auuInput, rigaLavoratori } from './_figli';
 import type { ToolSpec } from '../tool-types';
 export default (l: L): ToolSpec => ({
   exemple: (v) => T(l, `Esempio: DSU presentata a ${MESI(l)[v.mese - 1].label} 2027, ISEE di ${eur(v.isee, l)}`, `Example: DSU filed in ${MESI(l)[v.mese - 1].label} 2027, ISEE of ${eur(v.isee, l)}`),
   inputs: [
-    { id: 'mese', label: T(l, 'Mese in cui presenti la DSU 2027', 'Month you file the 2027 DSU'), def: 2, options: MESI(l) },
+    { id: 'mese', label: T(l, 'Mese in cui presenti la DSU 2027 (la dichiarazione per l’ISEE)', 'Month you file the 2027 DSU'), def: 2, options: MESI(l) },
     { id: 'isee', label: T(l, 'ISEE atteso per il 2027', 'Expected 2027 ISEE'), def: 20000, unit: '€', max: 200000 },
     ...campiFigli(l),
   ],
@@ -20,6 +20,7 @@ export default (l: L): ToolSpec => ({
         [T(l, 'Al mese con l’ISEE', 'Per month with the ISEE'), eur2(r.con, l)],
         [T(l, 'Al mese senza ISEE', 'Per month without an ISEE'), eur2(r.senza, l)],
         [T(l, 'Differenza al mese', 'Difference per month'), eur2(r.differenza, l)],
+        ...(rigaLavoratori(l, v, v.isee) ? [rigaLavoratori(l, v, v.isee)!] : []),
         [T(l, 'Totale marzo 2027 - febbraio 2028', 'Total March 2027 - February 2028'), eur(r.annuo, l), true],
       ],
       note: T(l, 'Importi 2026 usati come stima: le soglie 2027 escono a inizio anno con la rivalutazione.', '2026 amounts used as an estimate: the 2027 thresholds are published early in the year.'),

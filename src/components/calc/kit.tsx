@@ -14,6 +14,14 @@ export function Shell({ form, result, id, below }: { form: ReactNode; result: Re
   const card = useRef<HTMLDivElement>(null);
   const [belowCard, setBelow] = useState(false);
   const [key, setKey] = useState<{ label: string; value: string } | null>(null);
+  // Testeurs naïfs du 2026-11-14 : à l'ouverture, la barre recouvrait le dernier champ visible (« Mesi di lavoro »),
+  // dont la valeur ne se voyait jamais. Elle n'apparaît plus qu'après un premier défilement.
+  const [moved, setMoved] = useState(false);
+  useEffect(() => {
+    const on = () => { if (window.scrollY > 120) { setMoved(true); window.removeEventListener('scroll', on); } };
+    window.addEventListener('scroll', on, { passive: true });
+    return () => window.removeEventListener('scroll', on);
+  }, []);
   useEffect(() => {
     const el = card.current;
     if (!el || typeof IntersectionObserver === 'undefined') return;
@@ -28,7 +36,7 @@ export function Shell({ form, result, id, below }: { form: ReactNode; result: Re
         <div ref={card} aria-live="polite" data-resultat className="mt-6 rounded-xl border border-accent-200 bg-accent-50/60 p-4 sm:p-5 lg:sticky lg:top-20 lg:mt-0"><KeyFigure.Provider value={setKey}>{result}</KeyFigure.Provider></div>
       </div>
       {below}
-      {belowCard && key && (
+      {moved && belowCard && key && (
         <button type="button" aria-hidden="true" tabIndex={-1} onClick={() => card.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
           className="fixed inset-x-0 bottom-0 z-40 flex items-baseline justify-between gap-3 border-t border-accent-200 bg-accent-50 px-4 py-3 text-left shadow-lg lg:hidden">
           <span className="text-sm font-medium text-navy-700">{key.label}</span>

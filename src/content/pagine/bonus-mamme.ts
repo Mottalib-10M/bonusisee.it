@@ -1,6 +1,6 @@
 import { defineGuide } from '../../lib/guide-types';
 
-const es = { figli: 2, etaPiuPiccolo: 4, mesi: 12, cdi: false, reddito: 28000 };
+const es = { figli: 2, etaPiuPiccolo: 4, mesi: 12, cdi: false, reddito: 22000 };
 
 export default defineGuide({
   id: 'bonus-mamme',

@@ -10,7 +10,7 @@ export default defineGuide({
   it: {
     slug: 'bonus-nuovi-nati',
     nav: 'Bonus nuovi nati',
-    card: '1.000 euro per ogni figlio nato o adottato dal 2025 con ISEE fino a 40.000 euro: la scadenza della domanda.',
+    card: '1.000 euro per ogni figlio nato o adottato dal 2025 con ISEE fino a 40.000 euro, da chiedere entro 120 giorni dalla nascita.',
     title: 'Bonus nuovi nati: 1.000 euro, ISEE e scadenza domanda',
     description: 'Bonus nuovi nati: 1.000 euro una tantum per ogni figlio nato o adottato dal 2025 con ISEE fino a 40.000 euro. Calcola l’ultimo giorno utile per la domanda INPS.',
     h1: 'Bonus nuovi nati: requisiti e ultimo giorno per la domanda',
@@ -39,7 +39,7 @@ ${h.table(['Data di nascita', 'Ultimo giorno per la domanda'], righe, 'Esempi di
   en: {
     slug: 'newborn-bonus',
     nav: 'Newborn bonus',
-    card: '€1,000 for each child born or adopted from 2025 with an ISEE up to €40,000: the claim deadline.',
+    card: '€1,000 for each child born or adopted from 2025 with an ISEE up to €40,000, to be claimed within 120 days of the birth.',
     title: 'Bonus nuovi nati: the €1,000 newborn bonus and its deadline',
     description: 'Bonus nuovi nati (newborn bonus): a one-off €1,000 for each child born or adopted from 2025 with an ISEE up to €40,000. Work out the last day to claim it.',
     h1: 'Bonus nuovi nati: who qualifies and the last day to claim',

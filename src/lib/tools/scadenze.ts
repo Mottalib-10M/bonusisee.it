@@ -5,13 +5,13 @@ import type { ToolSpec } from '../tool-types';
 interface Evento { d: string; it: string; en: string; per: 'tutti' | 'figli' | 'mamma' | 'dedicata' }
 const D = P.date;
 const EVENTI: Evento[] = [
-  { d: D.dedicata_primo_pagamento, it: 'Carta Dedicata a te: primo pagamento entro oggi o la carta si blocca', en: 'Carta Dedicata a te: first payment by today or the card is blocked', per: 'dedicata' },
+  { d: D.dedicata_primo_pagamento, it: 'Carta Dedicata a te: ultimo giorno per il primo pagamento, poi la carta si blocca', en: 'Carta Dedicata a te: last day for the first payment, after that the card is blocked', per: 'dedicata' },
   { d: D.mamme_domanda, it: 'Bonus mamme 2026: ultimo giorno per la domanda INPS', en: 'Working-mothers bonus 2026: last day to apply to INPS', per: 'mamma' },
   { d: D.dsu_2026_scade, it: 'Scade l’ISEE 2026 (DSU valida fino al 31 dicembre)', en: 'The 2026 ISEE expires (DSU valid until 31 December)', per: 'tutti' },
   { d: D.dsu_2027_dal, it: 'Si può presentare la DSU 2027', en: 'The 2027 DSU can be filed', per: 'tutti' },
   { d: D.mamme_domanda_dicembre, it: 'Bonus mamme 2026: domanda per chi matura il requisito a dicembre', en: 'Working-mothers bonus 2026: deadline if eligible from December', per: 'mamma' },
   { d: D.auu_annualita_2027, it: 'Assegno unico: inizia l’annualità marzo 2027 - febbraio 2028', en: 'Child allowance: the March 2027 - February 2028 year starts', per: 'figli' },
-  { d: D.auu_arretrati_entro, it: 'Assegno unico: DSU entro oggi per avere gli arretrati da marzo', en: 'Child allowance: file the DSU by today to get arrears from March', per: 'figli' },
+  { d: D.auu_arretrati_entro, it: 'Assegno unico: ultimo giorno per presentare la DSU (la dichiarazione per l’ISEE) e avere gli arretrati da marzo', en: 'Child allowance: last day to file the DSU (the ISEE form) and get arrears from March', per: 'figli' },
 ];
 export default (l: L): ToolSpec => ({
   exemple: T(l, 'Esempio: famiglia con figli e madre lavoratrice', 'Example: family with children and a working mother'),

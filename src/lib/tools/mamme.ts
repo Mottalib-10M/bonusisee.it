@@ -16,7 +16,7 @@ export default (l: L): ToolSpec => ({
       alert: a.compieNellAnno ? T(l, 'Se il figlio compie il limite di età nell’anno, il bonus si ferma al mese del compleanno.', 'If the child reaches the age limit during the year, the bonus stops in the birthday month.') : undefined,
       rows: [
         [T(l, 'Domanda INPS entro', 'Apply to INPS by'), data(P.mamme2026.domanda_entro, l)],
-        [T(l, '2027, se il DDL passa così (100 € al mese)', '2027, if the bill passes as is (€100 a month)'), eur(b.totale, l), true],
+        [T(l, '2027, se la proposta di legge passa così (100 € al mese)', '2027, if the bill passes as is (€100 a month)'), eur(b.totale, l), true],
         [T(l, 'Differenza 2027 su 2026', '2027 versus 2026'), eur(b.totale - a.totale, l)],
       ],
       note: T(l, 'Il 2027 è un disegno di legge non ancora votato: cifre da confermare alla legge di bilancio.', '2027 is a bill not yet voted: figures to be confirmed by the budget law.'),

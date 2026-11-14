@@ -37,7 +37,7 @@ export default defineGuide({
         ['Voucher infanzia autonomi (art. 60)', 'non esiste', `fino a ${h.eur(D.voucher_autonomi_mensile)} al mese per ${h.num(D.voucher_autonomi_mesi)} mesi`],
       ];
       return `<h2>Legge di bilancio 2027: le misure del DDL per le famiglie</h2>
-<p>La tabella confronta le regole in vigore con il ${h.src('ddl2027', 'testo del disegno di legge di bilancio 2027')} pubblicato dalla Ragioneria generale dello Stato. Le cifre della colonna di destra non sono ancora legge.</p>
+<p>La tabella confronta le regole in vigore con il ${h.src('ddl2027', 'testo del disegno di legge di bilancio 2027')} pubblicato dalla Ragioneria generale dello Stato. Le cifre «Dal 2027» non sono ancora legge.</p>
 ${h.table(['Misura', 'Nel 2026', 'Dal 2027 secondo il DDL'], righe, 'Misure per le famiglie: regole 2026 e disegno di legge di bilancio 2027, non ancora votato', ['l', 'l', 'l'])}
 <h2>Il bonus mamme da 60 a 100 euro</h2>
 <p>Il bonus del 2026 è previsto dal comma 207 della ${h.src('l199', 'legge n. 199 del 2025')} e la ${h.src('inpsMamme', 'scheda INPS')} ne fissa la domanda entro il ${h.date(h.P.mamme2026.domanda_entro)}. Il DDL lo porta a ${h.eur(D.mamme_mensile)} al mese con pagamento trimestrale e abroga l’esonero contributivo per le madri con tre o più figli a tempo indeterminato, che rientrano così nel bonus. Il calcolo per il 2026 è nella pagina sul ${h.a('bonus-mamme', 'bonus mamme')}.</p>
@@ -51,7 +51,7 @@ ${h.table(['Misura', 'Nel 2026', 'Dal 2027 secondo il DDL'], righe, 'Misure per 
     card: 'Working-mothers bonus at €100, a fund for children born from 2027, longer 80% parental leave: what changes if the bill passes.',
     title: 'Legge di bilancio 2027: family measures in the budget bill',
     description: 'Legge di bilancio 2027 for families: the bill sets the mothers’ bonus at €100 a month, €100 a year for babies born from 2027 and longer 80% parental leave.',
-    h1: 'Legge di bilancio 2027: what changes for families',
+    h1: 'Italy’s 2027 budget law (legge di bilancio 2027): what changes for families',
     intro: 'The legge di bilancio 2027 is still a bill: the calculator estimates what your family would get under the text presented, compared with the rules in force in 2026.',
     resume: (h) => {
       const D = h.P.ddl2027;
@@ -73,7 +73,7 @@ ${h.table(['Misura', 'Nel 2026', 'Dal 2027 secondo il DDL'], righe, 'Misure per 
         ['Childcare voucher, self-employed (art. 60)', 'does not exist', `up to ${h.eur(D.voucher_autonomi_mensile)} a month for ${h.num(D.voucher_autonomi_mesi)} months`],
       ];
       return `<h2>Legge di bilancio 2027: the bill’s family measures</h2>
-<p>The table compares the rules in force with the ${h.src('ddl2027', 'text of the 2027 budget bill')} published by the State General Accounting Office. The figures in the right-hand column are not law yet.</p>
+<p>The table compares the rules in force with the ${h.src('ddl2027', 'text of the 2027 budget bill')} published by the State General Accounting Office. The “From 2027” figures are not law yet.</p>
 ${h.table(['Measure', 'In 2026', 'From 2027 under the bill'], righe, 'Family measures: 2026 rules and the 2027 budget bill, not yet voted', ['l', 'l', 'l'])}
 <h2>The working-mothers bonus from €60 to €100</h2>
 <p>The 2026 bonus comes from paragraph 207 of ${h.src('l199', 'Law 199 of 2025')} and the ${h.src('inpsMamme', 'INPS page')} sets the claim deadline at ${h.date(h.P.mamme2026.domanda_entro)}. The bill raises it to ${h.eur(D.mamme_mensile)} a month paid quarterly and repeals the contribution relief for mothers of three or more on permanent contracts, who thus come within the bonus. The 2026 calculation is on the ${h.a('bonus-mamme', 'working-mothers bonus')} page.</p>

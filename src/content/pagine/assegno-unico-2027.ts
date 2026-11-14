@@ -1,6 +1,6 @@
 import { defineGuide } from '../../lib/guide-types';
 
-const fam = { isee: 22000, minori: 2, under1: 0, tra1e3: 0, maggiorenni: 0, entrambiLavorano: false, madreUnder21: false };
+const fam = { isee: 20000, minori: 2, under1: 0, tra1e3: 0, maggiorenni: 0, entrambiLavorano: false, madreUnder21: false };
 
 export default defineGuide({
   id: 'assegno-unico-2027',

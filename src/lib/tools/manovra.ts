@@ -15,7 +15,7 @@ export default (l: L): ToolSpec => ({
     const r = manovra2027(mammeInput(v), v.nati, v.versamenti);
     const totale = r.differenzaMamme + r.fondo + r.detrazione;
     return {
-      head: [T(l, 'In più nel 2027 se il DDL passa così', 'Extra in 2027 if the bill passes as is'), eur(totale, l)],
+      head: [T(l, 'In più nel 2027 rispetto al 2026, se la proposta di legge passa così', 'Extra in 2027 compared with 2026, if the bill passes as is'), eur(totale, l)],
       sub: T(l, `Disegno di legge: voto atteso entro il ${data(P.ddl2027.voto_atteso, l)}`, `Bill: vote expected by ${data(P.ddl2027.voto_atteso, l)}`),
       rows: [
         [T(l, 'Bonus mamme 2026', 'Working-mothers bonus 2026'), eur(r.mamme2026, l)],

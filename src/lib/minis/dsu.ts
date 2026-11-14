@@ -7,7 +7,7 @@ export default (l: L): MiniSpec => ({
   cta: T(l, 'Il calcolo completo per il 2027', 'The full 2027 calculation'),
   exemple: T(l, 'Esempio: ISEE di 20.000 €, due figli, DSU a settembre', 'Example: €20,000 ISEE, two children, DSU in September'),
   inputs: [
-    { id: 'mese', label: T(l, 'Mese della DSU 2027', 'Month of the 2027 DSU'), def: 9, options: MESI(l) },
+    { id: 'mese', label: T(l, 'Mese della DSU 2027 (la dichiarazione per l’ISEE)', 'Month of the 2027 DSU'), def: 9, options: MESI(l) },
     { id: 'isee', label: T(l, 'ISEE atteso', 'Expected ISEE'), def: 20000, unit: '€', max: 200000 },
   ],
   run: (v) => {
